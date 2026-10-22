@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://dq8wskxwtn8fl"]
+
+[ext_resource type="Script" uid="uid://cej5xbv1t23bu" path="res://objects/ghost.gd" id="1_lix83"]
+[ext_resource type="PackedScene" uid="uid://xy8rvnjp22n5" path="res://models/character.glb" id="1_x4i4s"]
+[ext_resource type="ArrayMesh" uid="uid://deu06eho4c74" path="res://meshes/dust.res" id="3_e022s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a4bcw"]
+diffuse_mode = 2
+specular_mode = 2
+metallic_specular = 0.0
+backlight = Color(0, 0.521569, 0.709804, 1)
+billboard_keep_scale = true
+grow_amount = 1.882
+proximity_fade_distance = 0.25
+
+[sub_resource type="Curve" id="Curve_a2tbs"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.249284, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_f46kd"]
+curve = SubResource("Curve_a2tbs")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fy0py"]
+particle_flag_align_y = true
+emission_shape = 1
+emission_sphere_radius = 0.2
+direction = Vector3(0, 0, 0)
+gravity = Vector3(0, 0.1, 0)
+scale_min = 0.75
+scale_curve = SubResource("CurveTexture_f46kd")
+
+[node name="Ghost" type="Node3D" unique_id=1623577783 node_paths=PackedStringArray("animation", "particles_trail", "name_label")]
+script = ExtResource("1_lix83")
+animation = NodePath("Character/AnimationPlayer")
+particles_trail = NodePath("ParticlesTrail")
+name_label = NodePath("NameLabel")
+
+[node name="NameLabel" type="Label3D" parent="." unique_id=53437323]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+pixel_size = 0.0007
+billboard = 1
+fixed_size = true
+alpha_cut = 1
+text = "Player"
+outline_size = 32
+
+[node name="Character" parent="." unique_id=393120876 instance=ExtResource("1_x4i4s")]
+
+[node name="leg-left" parent="Character/character/root" parent_id_path=PackedInt32Array(393120876, 898337451) index="0" unique_id=1982488143]
+transform = Transform3D(0.9659258, 0, 0.25881907, 0, 1, 0, -0.25881907, 0, 0.9659258, 0.125, 0.17625, -0.02375)
+
+[node name="leg-right" parent="Character/character/root" parent_id_path=PackedInt32Array(393120876, 898337451) index="1" unique_id=904750104]
+transform = Transform3D(0.9659258, 0, -0.25881907, 0, 1, 0, 0.25881907, 0, 0.9659258, -0.125, 0.17625, -0.023750002)
+
+[node name="torso" parent="Character/character/root" parent_id_path=PackedInt32Array(393120876, 898337451) index="2" unique_id=907235389]
+transform = Transform3D(1, 0, 0, 0, 0.9961947, 0.08715574, 0, -0.08715574, 0.9961947, -1.8047786e-15, 0.17625, -0.02375)
+
+[node name="arm-left" parent="Character/character/root/torso" index="0" unique_id=573411710]
+transform = Transform3D(0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 0, 0, 1, 0.3, 0.17500001, 0)
+
+[node name="arm-right" parent="Character/character/root/torso" index="1" unique_id=1600872020]
+transform = Transform3D(0.70710677, -0.70710677, 0, 0.70710677, 0.70710677, 0, 0, 0, 1, -0.3, 0.1195, 0)
+
+[node name="ParticlesTrail" type="GPUParticles3D" parent="." unique_id=1790544305]
+physics_interpolation_mode = 2
+material_override = SubResource("StandardMaterial3D_a4bcw")
+cast_shadow = 0
+amount = 60
+fixed_fps = 0
+process_material = SubResource("ParticleProcessMaterial_fy0py")
+draw_pass_1 = ExtResource("3_e022s")
+
+[editable path="Character"]

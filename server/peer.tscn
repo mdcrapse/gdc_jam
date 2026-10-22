@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dlhxosstubcif"]
+
+[ext_resource type="Script" uid="uid://c470hyxx4ebta" path="res://server/peer.gd" id="1_6qeiw"]
+
+[node name="Peer" type="Node" unique_id=511653464]
+script = ExtResource("1_6qeiw")
